@@ -1,0 +1,8 @@
+# Local configuration such as API keys
+secrets.properties
+
+# Build outputs specific to this module
+/build/
+
+# Temporary files created by the IDE specifically for this module
+*.iml
