@@ -34,11 +34,7 @@ class StarWarsViewModel(application: Application) : AndroidViewModel(application
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                val films = repository.getAllFilms()
-
-                val lastFilmInTrilogy =
-                    films.find { it.title.lowercase(Locale.getDefault()) == "return of the jedi" }
-                        ?: return@launch
+                val lastFilmInTrilogy = repository.getLastTrilogyFilm()
 
                 val peopleDeferred = async {
                     lastFilmInTrilogy.characters.map {

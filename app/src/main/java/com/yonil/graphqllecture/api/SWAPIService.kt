@@ -7,8 +7,8 @@ import retrofit2.http.GET
 import retrofit2.http.Url
 
 interface SWAPIService {
-    @GET("films/")
-    suspend fun getAllFilms(): APIListResponse<Film>
+    @GET("films/3")
+    suspend fun getLastTrilogyFilm(): Film
 
     @GET
     suspend fun getPeople(@Url url: String): People
