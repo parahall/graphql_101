@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.apollographql.apollo3") version "3.8.2"
 }
 
 android {
@@ -50,10 +51,19 @@ android {
     buildToolsVersion = "34.0.0"
 }
 
+apollo {
+    service("service") {
+        packageName.set("com.yonil.graphqllecture")
+    }
+}
+
 dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
+
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")

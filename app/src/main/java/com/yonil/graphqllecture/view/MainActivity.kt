@@ -4,10 +4,15 @@ import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,30 +45,46 @@ class MainActivity : ComponentActivity() {
         setContent {
             GraphQLLectureTheme {
                 val uiState by starWarsViewModel.uiState.collectAsState()
-                // A surface container using the 'background' color from the theme
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val film = uiState.film
-                    if (uiState.message.isNotEmpty()) {
-                        Message(message = uiState.message)
-                        return@Surface
-                    }
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Button(onClick = { starWarsViewModel.fetchLatestFilmDataREST() }) {
+                                Text("Fetch REST")
+                            }
+                            Button(onClick = { starWarsViewModel.fetchLatestFilmDataGraphQL() }) {
+                                Text("Fetch GraphQL")
+                            }
+                        }
 
-                    if (film == null) {
-                        Greeting(name = "Graphql!")
-                        return@Surface
+                        if (uiState.message.isNotEmpty()) {
+                            Message(message = uiState.message)
+                        } else {
+                            val film = uiState.film
+                            if (film == null) {
+                                Greeting(name = "Graphql!")
+                            } else {
+                                StarWarsInfo(film, uiState.characters, uiState.planets)
+                            }
+                        }
                     }
-
-                    StarWarsInfo(film, uiState.characters, uiState.planets)
                 }
             }
         }
         val factory = StarWarsViewModelFactory(application)
         starWarsViewModel = ViewModelProvider(this, factory)[StarWarsViewModel::class.java]
-
-        starWarsViewModel.fetchLatestFilmData()
     }
 }
 
@@ -81,14 +102,6 @@ fun Message(message: String, modifier: Modifier = Modifier) {
         text = message,
         modifier = modifier
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GraphQLLectureTheme {
-        Greeting("Android")
-    }
 }
 
 @Composable

@@ -1,6 +1,7 @@
 package com.yonil.graphqllecture
 
 import android.app.Application
+import com.apollographql.apollo3.ApolloClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -12,6 +13,8 @@ class GraphQLApp : Application() {
     lateinit var retrofit: Retrofit
         private set
 
+    lateinit var apolloClient  : ApolloClient
+        private set
     override fun onCreate() {
         super.onCreate()
 
@@ -32,5 +35,10 @@ class GraphQLApp : Application() {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
+        apolloClient = ApolloClient.Builder()
+            .serverUrl("https://swapi-graphql.netlify.app/.netlify/functions/index")
+            .build()
+
     }
 }

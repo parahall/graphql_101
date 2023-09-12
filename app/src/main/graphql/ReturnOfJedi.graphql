@@ -1,0 +1,20 @@
+    query ReturnOfJedi {
+    film(filmID: 3) {
+        id
+        title
+        director
+        releaseDate
+        planetConnection {
+            planets {
+                name
+                population
+                diameter
+            }
+        }
+        characterConnection {
+            characters {
+                name
+            }
+        }
+    }
+}
