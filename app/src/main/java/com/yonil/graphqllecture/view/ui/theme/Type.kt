@@ -1,4 +1,4 @@
-package com.yonil.graphqllecture.ui.theme
+package com.yonil.graphqllecture.view.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
